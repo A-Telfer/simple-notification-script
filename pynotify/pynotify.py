@@ -104,9 +104,15 @@ def list_recipients():
 
 @cli.command("send")
 @click.argument("subject")
-@click.argument("content")
-def cli_send(subject, content):
+@click.argument("content", default="")
+@click.option("--pipe", default=False, is_flag=True)
+def cli_send(subject, content, pipe):
     """Send an email."""
+    if pipe:
+        stream = click.get_text_stream('stdin')
+        send(subject, content + stream.read())
+        return 
+
     send(subject, content)
 
 
@@ -128,14 +134,14 @@ def send(subject, content):
     msg["Subject"] = subject
     msg["To"] = ", ".join(config.get("recipients", []))
     msg["From"] = username
-
+    
     try:
         server = smtplib.SMTP_SSL(config["bot"]["host"], config["bot"]["port"])
         server.ehlo()
         server.login(username, password)
         server.send_message(msg)
         server.close()
-        click.echo("message sent")
+        click.echo("Message sent.")
     except Exception as e:
         click.echo(e)
         click.echo("Error sending message")

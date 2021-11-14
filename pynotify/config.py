@@ -7,7 +7,6 @@ config_file = pkg_resources.resource_filename(__name__, "config.yaml")
 
 
 def load_config():
-    print(config_file)
     if not os.path.exists(config_file):
         return {}
 

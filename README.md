@@ -3,15 +3,21 @@
 Notify yourself when your python script (or other programs) are done.
 
 ## Usage
+CLI
 ```
 notify send "Complete" "Simulation x has finished"
 ```
 
 or 
 
-```
+```python
 import pynotify
 pynotify.send("Complete", "simulation x has finished")
+```
+
+it can also pipe output
+```
+python myscripy.py | notify send "Script Done" --pipe
 ```
 
 ## Setup 
@@ -22,10 +28,8 @@ pynotify.send("Complete", "simulation x has finished")
 
 2. Go into the account `settings > security` then allow `Less secure apps`
 
-![image-20211113125642543](/home/andretelfer/.var/app/io.typora.Typora/config/Typora/typora-user-images/image-20211113125642543.png)
 
 ### Install 
-Clone this repository and cd into it
 ```
 pip install --user pynotify-telfer
 ```
@@ -40,5 +44,5 @@ notify sender update --email <bot email> --password <bot password>
 Add your recipients
 
 ```
-notify add <your email>
+notify add <your email> 
 ```
